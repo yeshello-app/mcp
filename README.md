@@ -52,6 +52,17 @@ YesHello is a platform for creating digital business cards, lead capture forms, 
 
 ## Quick Start
 
+### Install as Claude Code Plugin (recommended)
+
+```bash
+/plugin marketplace add yeshello-app/mcp
+/plugin install digital-business-card@yeshello
+```
+
+Then just say: "Build me a digital business card from https://mywebsite.com"
+
+The plugin includes the skill + MCP server connection. You'll be guided through connecting your account on first use.
+
 ### Connect to Claude.ai or Claude Desktop
 
 1. Go to **Settings > Connectors > Add Connector**
