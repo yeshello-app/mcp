@@ -22,18 +22,63 @@ arguments: url
 
 ## What is YesHello?
 
-More than a card. Simpler than a website. YesHello is a platform that replaces five subscriptions with one:
+More than a card. Simpler than a website. YesHello replaces the website, the link-in-bio, the form builder, the reviews widget, and the NFC card - all in one platform that you can build in minutes.
 
-- **Mobile-first website** - services, reviews, gallery, custom domain. Live in minutes, ranking on Google from day one.
-- **Lead capture page** - forms with webhook delivery, countdown timers, six CTA types. Leads straight to your CRM.
-- **Digital business card** - services, portfolio, contact info in one link. Share via NFC, QR, or tap. Always up to date.
-- **Branded team cards** - one template, field-level permissions, every member gets their own card. Brand stays consistent at scale.
+- **Mobile-first website** - services, reviews, gallery, custom domain. Ranks on Google from day one.
+- **Lead capture forms** - webhook delivery straight to your CRM. Countdown timers. Six CTA types. No middleman.
+- **Digital business card** - your services, portfolio, and contact info in one link. Share via NFC, QR, or tap.
+- **Service listings** - pricing, descriptions, featured images, and call-to-action buttons per item.
+- **Google Reviews** - auto-synced from your Google Business profile. Carousel, grid, list, or badge layout.
+- **Branded team cards** - one template, field-level permissions, every member gets their own card.
 
-**Who it's for:** Freelancers, consultants, photographers, realtors, plumbers, coaches, agencies, small businesses - anyone who needs a professional online presence without paying for a developer or agency.
+**Who it's for:** Freelancers, consultants, photographers, realtors, plumbers, coaches, agencies, restaurants, salons - anyone who needs a professional online presence without a developer or agency.
 
-**Free plan available.** No credit card required. Paid plans unlock more cards, custom domains, and team features.
+**Free plan available.** No credit card required.
 
-**What makes it different from link-in-bio tools:** SEO that ranks on Google, lead capture forms with webhooks, service listings with pricing and CTAs, Google Reviews integration, AI builder from URL, NFC support, team management with field-level locking.
+**What makes this different from every other card builder:**
+- SEO that actually ranks on Google (not just a link page)
+- Lead capture forms with webhook delivery (not just a contact button)
+- Service listings with pricing and 6 CTA types (not just text)
+- Google Reviews auto-synced (not manually pasted)
+- AI builds the entire card from a website URL in 2 minutes
+- NFC tap support with analytics
+- Team management with field-level locking at scale
+- Custom domains with SSL
+
+## The Live Experience
+
+**This is the killer feature.** When the user has the card builder open in their browser, EVERY edit you make appears instantly on their screen:
+
+- You add a field -> it appears in the preview
+- You update text -> it types itself in, character by character
+- You add an image -> it loads in the preview
+- You reorder fields -> they animate into position
+- The accordion expands to show the field being edited
+- The preview scrolls to the section being changed
+
+**Tell the user:** "Open your browser and go to the builder URL I'll give you. Split your screen - this chat on one side, the builder on the other. Then watch as I build your card live. You'll see every field appear, every image load, every piece of text type itself in."
+
+### How to set up the live demo:
+1. After creating the card, give the user the builder URL: `https://yeshello.app/dashboard/builder/[shortId]`
+2. Tell them to open it in their browser
+3. Use `open_page(url: "/dashboard/builder/[shortId]")` to open it for them if they have YesHello open
+4. Use `get_browser_state()` to check if they have it open
+5. Then build the card field by field (NOT with update_and_publish_card) - use `add_card_field` one at a time so they see each field appear live
+6. Wait 3-5 seconds between fields so they can see each one
+
+**For a live demo, use step-by-step building (add_card_field one at a time).**
+**For fast production builds, use update_and_publish_card (one call, no live effect).**
+
+## What You Can Control
+
+Almost everything the user can do in the dashboard, you can do via MCP:
+
+**Cards:** Create, edit every field, switch themes, change colours, reorder fields, set SEO metadata, publish/unpublish, set up vCard contact download
+**Forms:** Create forms, add/edit fields (text, email, phone, textarea, select, checkbox, radio), configure webhooks, publish, view submissions
+**Listings:** Create service/product/property/event listings, add items with pricing and CTAs, set hero images, publish
+**Media:** Upload images from URL, search Pexels stock photos, organise in folders, scrape website content to markdown
+**Browser:** Open pages for the user, highlight any of 160+ UI elements with tooltips, give guided tours, fill input fields, navigate between pages
+**Account:** Check user info, quota usage, subscription tier
 
 ## Step 0: Check if YesHello is connected
 
@@ -88,6 +133,13 @@ After the user confirms they connected, try `get_account()` again to verify.
 
 ## Pipeline
 
+**Ask the user:** "Would you like to watch me build it live? If so, I'll open the builder in your browser and you can see each piece appear in real-time. Otherwise I'll build it in one shot and give you the link."
+
+- **Live demo mode:** Build field by field with `add_card_field` (3-5 seconds between each). User watches it happen.
+- **Fast mode:** Build everything in one call with `update_and_publish_card`. Instant result.
+
+Default to live demo if the user has a browser available. It's the wow factor.
+
 Follow these steps in order. Do not skip any step.
 
 ### Step 1: Get account info
@@ -123,12 +175,37 @@ Collect ALL cdnUrls before proceeding.
 ```
 create_card(themeId: "professional")
 ```
-Note `themeInfo.heroFieldType` from response - use THIS for the hero field.
+Note `themeInfo.heroFieldType` and `shortId` from response.
 
-### Step 5: Build and publish
+**If live demo mode:** Tell the user: "Your card builder is ready. Open this link to watch me build it live: https://yeshello.app/dashboard/builder/[shortId]"
+Or use `open_page(url: "/dashboard/builder/[shortId]")` to open it for them.
+Wait for them to confirm they can see it before proceeding.
+
+### Step 5: Build the card
+
+**Live demo mode (recommended when user has browser):**
+Add fields one at a time with `add_card_field`. The user sees each field appear live in the builder preview. Wait 3-5 seconds between fields so they can watch.
+```
+add_card_field(id: "[shortId]", type: "[heroFieldType]", zoneId: "hero", data: {...})
+// user sees hero appear
+add_card_field(id: "[shortId]", type: "about", zoneId: "fields", data: {...})
+// user sees about section appear with text typing animation
+add_card_field(id: "[shortId]", type: "gallery", zoneId: "fields", data: {...})
+// user sees gallery images load
+add_card_field(id: "[shortId]", type: "action-buttons", zoneId: "fields", data: {...})
+// user sees contact buttons appear
+add_card_field(id: "[shortId]", type: "social-links", zoneId: "fields", data: {...})
+add_card_field(id: "[shortId]", type: "bottom-nav", zoneId: "stickyBar", data: {...})
+// then publish
+publish_card(id: "[shortId]")
+```
+
+**Fast mode:**
 ```
 update_and_publish_card(id: "[shortId]", fields: [...], metadata: {...}, publish: true)
 ```
+Everything in one call. No live effect but instant result.
+
 See Field Types Reference below for exact property names per field type.
 
 ### Step 6: Set up vCard (optional but recommended)
