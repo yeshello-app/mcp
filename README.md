@@ -23,6 +23,10 @@
 
 ---
 
+<p align="center">
+  <img src="https://bxflow.b-cdn.net/users/aTV3kUwrTSi2QxV2BGyroKzZ5O9jmElC/media/builder-hero.avif" alt="YesHello Builder" width="700" />
+</p>
+
 ## What is this?
 
 YesHello is a platform for creating digital business cards, lead capture forms, and service listings. This MCP server gives AI assistants (Claude, Cursor, VS Code, ChatGPT, and any MCP-compatible client) full control over building and managing your online business presence.
@@ -30,6 +34,11 @@ YesHello is a platform for creating digital business cards, lead capture forms, 
 **Give AI a website URL, and it builds your complete digital business card in under 2 minutes.**
 
 ## Features
+
+<p align="center">
+  <img src="https://bxflow.b-cdn.net/users/aTV3kUwrTSi2QxV2BGyroKzZ5O9jmElC/media/to-hero-builder-waves.avif" alt="YesHello Card with Wave Theme" width="340" />
+  <img src="https://bxflow.b-cdn.net/users/aTV3kUwrTSi2QxV2BGyroKzZ5O9jmElC/media/alexriveravirtugonobg.avif" alt="YesHello Digital Business Card Example" width="340" />
+</p>
 
 - **63 tools** across 8 categories: Cards, Forms, Submissions, Listings, Media, Interactive, Account, Skills
 - **Build from URL** - AI scrapes your website and creates a card with your real content
