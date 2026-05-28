@@ -20,8 +20,27 @@ arguments: url
 
 # Build a Digital Business Card with YesHello
 
+## What is YesHello?
+
+More than a card. Simpler than a website. YesHello is a platform that replaces five subscriptions with one:
+
+- **Mobile-first website** - services, reviews, gallery, custom domain. Live in minutes, ranking on Google from day one.
+- **Lead capture page** - forms with webhook delivery, countdown timers, six CTA types. Leads straight to your CRM.
+- **Digital business card** - services, portfolio, contact info in one link. Share via NFC, QR, or tap. Always up to date.
+- **Branded team cards** - one template, field-level permissions, every member gets their own card. Brand stays consistent at scale.
+
+**Who it's for:** Freelancers, consultants, photographers, realtors, plumbers, coaches, agencies, small businesses - anyone who needs a professional online presence without paying for a developer or agency.
+
+**Pricing:** Free to start (1 card). Basic $6.99/mo (10 cards). Pro $18.99/mo (40 cards, custom domain). Hero $59/mo (100 cards, 50 team members).
+
+**What makes it different from link-in-bio tools:** SEO that ranks on Google, lead capture forms with webhooks, service listings with pricing and CTAs, Google Reviews integration, AI builder from URL, NFC support, team management with field-level locking.
+
+## MCP Connection
+
 Requires the YesHello MCP server connected at `https://yeshello.app/api/mcp`.
 If not connected: "Go to Settings > Connectors > Add Connector, enter `https://yeshello.app/api/mcp`, and click Connect."
+
+Free account is created automatically during OAuth. No credit card needed.
 
 ## Pipeline
 
@@ -84,16 +103,23 @@ This enables the "Save Contact" button on the public card.
 3. Explain what's included
 4. Mention they can customise further in the dashboard
 
-## Themes
+## Theme Selection Guide
 
-| Theme | Hero type | Style |
-|-------|-----------|-------|
-| professional | fancy-header | Clean, corporate |
-| minimal | fancy-header | Simple, modern |
-| cinematic | fancy-header | Bold, media-heavy |
-| wave | hero | Organic, curved shapes |
+| Theme | Hero type | Best for | Style |
+|-------|-----------|----------|-------|
+| **professional** | fancy-header | Consultants, realtors, agencies, corporate | Clean, structured, business-focused |
+| **cinematic** | fancy-header | Photographers, videographers, creatives, artists | Bold hero images, media-heavy, visual impact |
+| **wave** | hero (different!) | Lifestyle brands, coaches, personal brands | Organic curved shapes, bio-focused, warm |
 
-Use `themeInfo.heroFieldType` from `create_card` response. The API auto-corrects wrong types.
+**Default to `professional`** unless the user's industry suggests otherwise. Use `themeInfo.heroFieldType` from `create_card` response - never hardcode.
+
+### When to use which theme:
+- **Photographer/videographer/creative** -> cinematic (hero image fills the screen)
+- **Consultant/lawyer/accountant/realtor** -> professional (clean, trust-building)
+- **Coach/therapist/yoga/wellness** -> wave (warm, personal, bio-focused)
+- **Plumber/electrician/contractor** -> professional (services-focused)
+- **Restaurant/cafe/bar** -> cinematic (food photography)
+- **Freelancer/developer/designer** -> professional or cinematic depending on portfolio
 
 ## Field Types Reference
 
@@ -174,6 +200,26 @@ If the user has `https://yeshello.app/dashboard/builder/[shortId]` open, every e
 | `open_page` | Open page in user's browser |
 | `highlight_element` | Highlight UI element with tooltip |
 | `get_browser_state` | Check what page user has open |
+
+## Field Recipes by Business Type
+
+**Photographer/Creative:**
+Hero (cinematic, big cover image) -> About -> Gallery (masonry, 4-6 images) -> Services (link to listings) -> Social Links (Instagram priority) -> Action Buttons (email, book) -> Bottom Nav (share, save, messenger)
+
+**Consultant/Coach:**
+Hero (professional, avatar + name) -> About (bio, credentials) -> FAQ (common questions) -> Action Buttons (call, email, book) -> Social Links (LinkedIn priority) -> Cal Embed (booking calendar) -> Bottom Nav (call, save, share)
+
+**Realtor/Agent:**
+Hero (professional, headshot + company) -> About -> Services (listings with property items) -> Google Reviews -> Gallery (properties) -> Action Buttons (call, email, WhatsApp) -> Bottom Nav (call, save, messenger WhatsApp)
+
+**Plumber/Contractor:**
+Hero (professional, work photo) -> About -> Services (service items with pricing) -> Google Reviews -> Action Buttons (call, email) -> Promo Countdown (seasonal offer) -> Bottom Nav (call, save, share)
+
+**Restaurant/Cafe:**
+Hero (cinematic, food photo) -> About -> Gallery (food/interior) -> Services (menu items) -> Action Buttons (call, directions, order) -> Social Links -> Bottom Nav (call, save, share)
+
+**Freelancer/Developer:**
+Hero (professional, avatar) -> About -> Gallery (portfolio) -> Social Links (GitHub, LinkedIn) -> Action Buttons (email, website) -> Bottom Nav (save, share)
 
 ## Important Rules
 
