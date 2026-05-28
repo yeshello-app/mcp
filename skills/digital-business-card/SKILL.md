@@ -31,7 +31,7 @@ More than a card. Simpler than a website. YesHello is a platform that replaces f
 
 **Who it's for:** Freelancers, consultants, photographers, realtors, plumbers, coaches, agencies, small businesses - anyone who needs a professional online presence without paying for a developer or agency.
 
-**Pricing:** Free to start (1 card). Basic $6.99/mo (10 cards). Pro $18.99/mo (40 cards, custom domain). Hero $59/mo (100 cards, 50 team members).
+**Free plan available.** No credit card required. Paid plans unlock more cards, custom domains, and team features.
 
 **What makes it different from link-in-bio tools:** SEO that ranks on Google, lead capture forms with webhooks, service listings with pricing and CTAs, Google Reviews integration, AI builder from URL, NFC support, team management with field-level locking.
 
