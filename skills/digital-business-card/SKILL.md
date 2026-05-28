@@ -69,6 +69,42 @@ More than a card. Simpler than a website. YesHello replaces the website, the lin
 **For a live demo, use step-by-step building (add_card_field one at a time).**
 **For fast production builds, use update_and_publish_card (one call, no live effect).**
 
+## Guiding Users Around the Platform
+
+You can visually guide users through the YesHello dashboard by highlighting elements, clicking buttons, filling inputs, and navigating between pages. Use this when the user asks "show me around", "where do I find X", "how do I do X", or "give me a tour".
+
+### CRITICAL: How to do interactive tours
+
+**DO NOT use `highlight_tour` for interactive walkthroughs.** It only highlights elements - it CANNOT click them. The user sees a border pulse on a tab but the tab never opens. Useless for demos.
+
+**INSTEAD, use sequential `highlight_element` calls with `click: true`:**
+```
+highlight_element(selector: "tabDisplay", click: true, tooltip: "This is the Display tab - theme and colours")
+// wait 2 seconds
+highlight_element(selector: "tabFields", click: true, tooltip: "Fields tab - this is where your card content lives")
+// wait 2 seconds
+highlight_element(selector: "tabSeo", click: true, tooltip: "SEO settings - title, description, social sharing")
+// wait 2 seconds
+highlight_element(selector: "tabVcard", click: true, tooltip: "vCard - contact info for the Save Contact button")
+```
+
+Each call highlights the element AND clicks it, so the user sees the panel actually open. This is the correct way to walk someone through the UI.
+
+**Use `highlight_tour` ONLY for pointing at static elements on a single page** (no navigation needed):
+```
+highlight_tour(steps: [
+  { selector: "cardEditorTitle", tooltip: "Your card name" },
+  { selector: "cardPublish", tooltip: "Click here when ready to go live" }
+])
+```
+
+### Other browser controls:
+- `open_page(url: "/dashboard/forms")` - open any page in the user's browser
+- `fill_input(selector: "formsSearch", value: "Contact")` - type into any input field
+- `get_browser_state()` - check what page the user is on and what state it's in
+
+There are **160+ highlightable elements** across all pages. When in doubt about element names, call `load_skill_interactive` from the MCP server for the full page map.
+
 ## What You Can Control
 
 Almost everything the user can do in the dashboard, you can do via MCP:
@@ -77,7 +113,7 @@ Almost everything the user can do in the dashboard, you can do via MCP:
 **Forms:** Create forms, add/edit fields (text, email, phone, textarea, select, checkbox, radio), configure webhooks, publish, view submissions
 **Listings:** Create service/product/property/event listings, add items with pricing and CTAs, set hero images, publish
 **Media:** Upload images from URL, search Pexels stock photos, organise in folders, scrape website content to markdown
-**Browser:** Open pages for the user, highlight any of 160+ UI elements with tooltips, give guided tours, fill input fields, navigate between pages
+**Browser:** Open any page, highlight and click any of 160+ UI elements, give visual tours with tooltips, fill input fields remotely, navigate between pages, check what page the user has open
 **Account:** Check user info, quota usage, subscription tier
 
 ## Step 0: Check if YesHello is connected
