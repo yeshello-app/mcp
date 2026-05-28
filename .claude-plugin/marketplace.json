@@ -1,0 +1,22 @@
+{
+  "name": "yeshello",
+  "owner": {
+    "name": "YesHello",
+    "email": "hello@yeshello.app"
+  },
+  "metadata": {
+    "description": "Digital business cards, lead capture forms, and service listings - built and managed by AI",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "digital-business-card",
+      "description": "Build a complete digital business card from a website URL. Scrapes content, searches stock photos, and creates a published card with hero, about, gallery, social links, contact buttons, and more. Supports 3 themes, 20+ field types, vCard, NFC, and live editing. Requires YesHello MCP server at https://yeshello.app/api/mcp",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/digital-business-card"
+      ]
+    }
+  ]
+}
