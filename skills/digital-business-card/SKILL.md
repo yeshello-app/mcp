@@ -35,12 +35,56 @@ More than a card. Simpler than a website. YesHello is a platform that replaces f
 
 **What makes it different from link-in-bio tools:** SEO that ranks on Google, lead capture forms with webhooks, service listings with pricing and CTAs, Google Reviews integration, AI builder from URL, NFC support, team management with field-level locking.
 
-## MCP Connection
+## Step 0: Check if YesHello is connected
 
-Requires the YesHello MCP server connected at `https://yeshello.app/api/mcp`.
-If not connected: "Go to Settings > Connectors > Add Connector, enter `https://yeshello.app/api/mcp`, and click Connect."
+Before doing ANYTHING, try calling `get_account()`. This tells you if the YesHello MCP server is connected.
 
-Free account is created automatically during OAuth. No credit card needed.
+**If it works** (returns user info) -> skip to Step 1.
+
+**If it fails** (tool not found, connection error, or no such tool) -> the user needs to connect first. Guide them through it in plain language:
+
+---
+
+Tell the user:
+
+"To build your business card, I need to connect to YesHello - it's the platform that hosts your card. It's free, takes 30 seconds, and you don't need a credit card.
+
+**Here's how to connect:**
+
+**If you're on Claude.ai or Claude Desktop:**
+1. Click the **tools icon** (wrench/plug) at the bottom of the chat
+2. Click **Add Connector** (or go to Settings > Connectors)
+3. Paste this URL: `https://yeshello.app/api/mcp`
+4. Click **Connect**
+5. A browser window will open - sign up or log in (you can use Google)
+6. Click **Approve** on the permissions screen
+7. Come back here and say 'done' - I'll build your card
+
+**If you're on Claude Code:**
+Run this command in your terminal:
+```
+claude mcp add yeshello --transport http https://yeshello.app/api/mcp
+```
+Then restart Claude Code and come back to this conversation.
+
+**If you're on Cursor / VS Code / Windsurf:**
+Add this to your MCP config file:
+```json
+{
+  "mcpServers": {
+    "yeshello": {
+      "url": "https://yeshello.app/api/mcp"
+    }
+  }
+}
+```
+Then restart your editor.
+
+Your account is created automatically when you connect. No forms to fill out."
+
+---
+
+After the user confirms they connected, try `get_account()` again to verify.
 
 ## Pipeline
 
@@ -50,7 +94,7 @@ Follow these steps in order. Do not skip any step.
 ```
 get_account()
 ```
-Check the user's handle and tier.
+Check the user's handle and tier. If this fails, go back to Step 0.
 
 ### Step 2: Scrape the website (if URL provided)
 ```
