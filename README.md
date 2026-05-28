@@ -122,6 +122,32 @@ YesHello has a **free tier** - connect the MCP server, build your first card, an
 
 See [yeshello.app/pricing](https://yeshello.app/pricing) for details.
 
+## Agent Skills
+
+This repo includes installable skills that work with Claude Code, OpenAI Codex, Cursor, Gemini CLI, and any tool supporting the [Agent Skills](https://agentskills.io/) open standard.
+
+### digital-business-card
+
+Build a complete digital business card from a website URL in one conversation. The skill handles the entire pipeline: scrape website, extract content, search stock photos, import images, create card, publish.
+
+**Install:**
+```bash
+# Copy to your personal skills directory
+cp -r skills/digital-business-card ~/.claude/skills/
+
+# Or for a specific project
+cp -r skills/digital-business-card .claude/skills/
+```
+
+**Use:**
+```
+/digital-business-card https://mywebsite.com
+```
+
+Or just ask naturally: "Build me a digital business card from https://mywebsite.com"
+
+Requires the YesHello MCP server to be connected (`https://yeshello.app/api/mcp`).
+
 ## Support
 
 - Documentation: [yeshello.app/docs/mcp-connector](https://yeshello.app/docs/mcp-connector)
