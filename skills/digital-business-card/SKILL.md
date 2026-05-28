@@ -73,33 +73,24 @@ More than a card. Simpler than a website. YesHello replaces the website, the lin
 
 You can visually guide users through the YesHello dashboard by highlighting elements, clicking buttons, filling inputs, and navigating between pages. Use this when the user asks "show me around", "where do I find X", "how do I do X", or "give me a tour".
 
-### CRITICAL: How to do interactive tours
+### Interactive tours with clicking
 
-**DO NOT use `highlight_tour` for interactive walkthroughs.** It only highlights elements - it CANNOT click them. The user sees a border pulse on a tab but the tab never opens. Useless for demos.
+Use `highlight_tour` with `click: true` on steps to walk users through the UI. Each step highlights the element, shows a tooltip, AND clicks it - so tabs actually open, drawers expand, and the user sees each panel:
 
-**INSTEAD, use sequential `highlight_element` calls with `click: true`:**
-```
-highlight_element(selector: "tabDisplay", click: true, tooltip: "This is the Display tab - theme and colours")
-// wait 2 seconds
-highlight_element(selector: "tabFields", click: true, tooltip: "Fields tab - this is where your card content lives")
-// wait 2 seconds
-highlight_element(selector: "tabSeo", click: true, tooltip: "SEO settings - title, description, social sharing")
-// wait 2 seconds
-highlight_element(selector: "tabVcard", click: true, tooltip: "vCard - contact info for the Save Contact button")
-```
-
-Each call highlights the element AND clicks it, so the user sees the panel actually open. This is the correct way to walk someone through the UI.
-
-**Use `highlight_tour` ONLY for pointing at static elements on a single page** (no navigation needed):
 ```
 highlight_tour(steps: [
-  { selector: "cardEditorTitle", tooltip: "Your card name" },
-  { selector: "cardPublish", tooltip: "Click here when ready to go live" }
+  { selector: "tabDisplay", tooltip: "Display tab - theme and colours", click: true },
+  { selector: "tabFields", tooltip: "Fields tab - your card content lives here", click: true },
+  { selector: "tabSeo", tooltip: "SEO settings - title and description", click: true },
+  { selector: "tabVcard", tooltip: "vCard - contact info for the Save Contact button", click: true }
 ])
 ```
 
+One MCP call, all steps play sequentially with smooth transitions. User sees each panel open live.
+
 ### Other browser controls:
 - `open_page(url: "/dashboard/forms")` - open any page in the user's browser
+- `highlight_element(selector: "apiKey", tooltip: "Your API key is here")` - highlight a single element
 - `fill_input(selector: "formsSearch", value: "Contact")` - type into any input field
 - `get_browser_state()` - check what page the user is on and what state it's in
 
